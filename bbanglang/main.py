@@ -113,7 +113,7 @@ def cn(expression):
         elif operator == "/":
             operand_stack.append(operand1 / operand2 if operand2 != 0 else float('inf'))
 
-    return operand_stack[0] if operand_stack else 0
+    return operand_stack[0] if operand_stack else expression
 
 def run(file1):
     with open(file1, "r", encoding="utf-8") as file:
@@ -130,7 +130,7 @@ def run(file1):
                 if j[hcount + 1] == "앙":
                     if j[hcount + 2:].startswith("당떨어져서그래~"):
                         ins2 = j[hcount + 10:]
-                        ins2 = pe(''.join(ins))
+                        ins2 = pe(''.join(ins2))
                         for i in ins2:
                             if  "*" in i:
                                 if not al:
@@ -139,22 +139,23 @@ def run(file1):
                                     al += str(i.count("*"))
                                 else:
                                     al += cs(i.count("*"))
-                            elif "&" in i:
+                            if "&" in i:
                                 if not al:
                                     al += cs(i.count("&"))
                                 elif (al[-1] == "/" or al[-1] == "*"):
                                     al += str(i.count("&"))
                                 else:
                                     al += cs(i.count("&"))
-                            elif i == "@":
+                            if i == "@":
                                 al = al + "*"
-                            elif i == "!":
+                            if i == "!":
                                 al = al + "/"
-                            elif i == "^":
+                            if i == "^":
                                 al = al+"+"
-                            elif i =="#":
+                            if i =="#":
                                 al = al+"-"
-                        val[hcount] = chr(cn(al[1:]))
+                        
+                        val[hcount] = chr(cn(al))
                         al=""
                         continue
                 global last
