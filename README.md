@@ -99,3 +99,7 @@ output=H
 ------
 output=Hello, World!
 ```
+### 파이썬 모듈
+```python
+pip install bbanglang
+```
