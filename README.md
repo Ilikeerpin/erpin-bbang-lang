@@ -99,7 +99,12 @@ output=H
 ------
 output=Hello, World!
 ```
-### 파이썬 모듈
+### 파이썬 모듈 다운로드
 ```python
 pip install bbanglang
+```
+### 파이썬 모듈 이용법
+```python
+import bbanglang
+bbanglang.run("main.bbang")
 ```
