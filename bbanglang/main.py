@@ -62,7 +62,7 @@ def cn(expression):
     token = ""
     
     for i, char in enumerate(expression):
-        if char.isdigit() or (char == '-' and (i == 0 or expression[i - 1] in "+-*/")):
+        if char.isdigit() or (char in "+-" and (i == 0 or expression[i - 1] in "+-*/(")):
             token += char
         else:
             if token:
@@ -71,8 +71,15 @@ def cn(expression):
             tokens.append(char)
     if token:
         tokens.append(token)
-
+    
+    refined_tokens = []
     for token in tokens:
+        if token.startswith("+") and token[1:].isdigit():
+            refined_tokens.append(token[1:])  # 앞의 + 제거
+        else:
+            refined_tokens.append(token)
+    
+    for token in refined_tokens:
         if token.lstrip('-').isdigit():
             operand_stack.append(int(token))
         elif token in "+-*/":
@@ -84,7 +91,7 @@ def cn(expression):
                 else:
                     operand2 = operand_stack.pop()
                     operand1 = operand_stack.pop()
-
+                
                 if operator == "+":
                     operand_stack.append(operand1 + operand2)
                 elif operator == "-":
@@ -94,7 +101,7 @@ def cn(expression):
                 elif operator == "/":
                     operand_stack.append(operand1 / operand2 if operand2 != 0 else float('inf'))
             operator_stack.append(token)
-
+    
     while operator_stack:
         operator = operator_stack.pop()
         if len(operand_stack) < 2:
@@ -103,7 +110,7 @@ def cn(expression):
         else:
             operand2 = operand_stack.pop()
             operand1 = operand_stack.pop()
-
+        
         if operator == "+":
             operand_stack.append(operand1 + operand2)
         elif operator == "-":
@@ -112,8 +119,8 @@ def cn(expression):
             operand_stack.append(operand1 * operand2)
         elif operator == "/":
             operand_stack.append(operand1 / operand2 if operand2 != 0 else float('inf'))
-
-    return operand_stack[0] if operand_stack else expression
+    
+    return operand_stack[0] if operand_stack else 0
 
 def run(file1):
     with open(file1, "r", encoding="utf-8") as file:
@@ -268,3 +275,4 @@ def run(file1):
                 end = ""
             elif not j.startswith("당떨어져서그래~") and not j.startswith("배고파~") and not j.startswith("교주~") and not j.startswith("빠") and j.startswith("네르~") and j:
                 raise RuntimeError("이게 어떻게 빠아앙이냐!")
+run("main.bbang")
