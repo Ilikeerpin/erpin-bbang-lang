@@ -274,5 +274,5 @@ def run(file1):
             elif j.startswith("네르~"):
                 end = ""
             elif not j.startswith("당떨어져서그래~") and not j.startswith("배고파~") and not j.startswith("교주~") and not j.startswith("빠") and j.startswith("네르~") and j:
-                raise RuntimeError("이게 어떻게 빠아앙이냐!")
+                raise RuntimeError("이게 어떻게 빵랭이냐!")
 run("main.bbang")
